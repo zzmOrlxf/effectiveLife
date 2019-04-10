@@ -1,6 +1,32 @@
 # 第2节:git使用指南
 
-### [Your Identity](https://git-scm.com/book/en/v1/Getting-Started-First-Time-Git-Setup#Your-Identity)
+If you start a project in the GitHub, these following word would be show:
+
+### …or create a new repository on the command line
+
+```
+echo "# Simple-IDEA" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/zzmOrlxf/Simple-IDEA.git
+git push -u origin master
+```
+
+### …or push an existing repository from the command line
+
+```
+git remote add origin https://github.com/zzmOrlxf/Simple-IDEA.git
+git push -u origin master
+```
+
+### …or import code from another repository
+
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+
+
+### Your Identity](https://git-scm.com/book/en/v1/Getting-Started-First-Time-Git-Setup#Your-Identity)
 
 The first thing you should do when you install Git is to set your user name and e-mail address. This is important because every Git commit uses this information, and it’s immutably baked into the commits you pass around:
 
@@ -31,6 +57,38 @@ $ git commit -m 'initial project version'
 
 We’ll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.
 
+### Adding Remote Repositories
+
+We’ve mentioned and given some demonstrations of how the `git clone` command implicitly adds the `origin` remote for you. Here’s how to add a new remote explicitly. To add a new remote Git repository as a shortname you can reference easily, run `git remote add <shortname> <url>`:
+
+```console
+$ git remote
+origin
+$ git remote add pb https://github.com/paulboone/ticgit
+$ git remote -v
+origin	https://github.com/schacon/ticgit (fetch)
+origin	https://github.com/schacon/ticgit (push)
+pb	https://github.com/paulboone/ticgit (fetch)
+pb	https://github.com/paulboone/ticgit (push)
+```
+
+Now you can use the string `pb` on the command line in lieu of the whole URL. For example, if you want to fetch all the information that Paul has but that you don’t yet have in your repository, you can run `git fetch pb`:
+
+```console
+$ git fetch pb
+remote: Counting objects: 43, done.
+remote: Compressing objects: 100% (36/36), done.
+remote: Total 43 (delta 10), reused 31 (delta 5)
+Unpacking objects: 100% (43/43), done.
+From https://github.com/paulboone/ticgit
+ * [new branch]      master     -> pb/master
+ * [new branch]      ticgit     -> pb/ticgit
+```
+
+Paul’s master branch is now accessible locally as `pb/master` — you can merge it into one of your branches, or you can check out a local branch at that point if you want to inspect it. (We’ll go over what branches are and how to use them in much more detail in [Git Branching](https://git-scm.com/book/en/v2/ch00/ch03-git-branching).)
+
+  
+
 ### [Cloning an Existing Repository](https://git-scm.com/book/en/v1/Git-Basics-Getting-a-Git-Repository#Cloning-an-Existing-Repository)
 
 If you want to get a copy of an existing Git repository — for example, a project you’d like to contribute to — the command you need is `git clone`. If you’re familiar with other VCS systems such as Subversion, you’ll notice that the command is `clone` and not `checkout`. This is an important distinction — Git receives a copy of nearly all data that the server has. Every version of every file for the history of the project is pulled down when you run `git clone`. In fact, if your server disk gets corrupted, you can use any of the clones on any client to set the server back to the state it was in when it was cloned (you may lose some server-side hooks and such, but all the versioned data would be there — see *Chapter 4* for more details).
@@ -50,6 +108,10 @@ $ git clone git://github.com/schacon/grit.git mygrit
 That command does the same thing as the previous one, but the target directory is called `mygrit`.
 
 Git has a number of different transfer protocols you can use. The previous example uses the `git://`protocol, but you may also see `http(s)://` or `user@server:/path.git`, which uses the SSH transfer protocol. *Chapter 4* will introduce all of the available options the server can set up to access your Git repository and the pros and cons of each.
+
+
+
+## !!If add a remote repository, you should add URL start with https:// , care abut the protocol, cause clone use git://
 
 
 
@@ -94,3 +156,4 @@ NrRFi9wrf+M7Q== schacon@mylaptop.local
 ```
 
 For a more in-depth tutorial on creating an SSH key on multiple operating systems, see the GitHub guide on SSH keys at <https://help.github.com/articles/generating-ssh-keys>.
+
